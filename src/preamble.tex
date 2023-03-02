@@ -1,0 +1,232 @@
+\usepackage{fontspec} % Custom fonts for LuaTeX and XeTeX (see https://ctan.org/pkg/fontspec?lang=en)
+\usepackage{pdfpages} % Include pdf pages as figures (see https://ctan.org/pkg/pdfpages?lang=en)
+\usepackage{indentfirst} % Make the first line of paragraphs be indented (see https://ctan.org/pkg/indentfirst?lang=en)
+\usepackage{geometry} % Adjust margins (see https://ctan.org/pkg/geometry?lang=en)
+\usepackage{siunitx} % Better units and numbers (see https://ctan.org/pkg/siunitx?lang=en)
+\usepackage{matlab-prettifier} % MATLAB codes (see https://ctan.org/pkg/matlab-prettifier?lang=en)
+\usepackage[americaninductors]{circuitikz} % For drawing the schematics (see https://ctan.org/pkg/circuitikz?lang=en)
+\usepackage{tikz} % matlab2tikz requirement (see https://ctan.org/pkg/tikz?lang=en)
+\usepackage{pgfplots} % matlab2tikz requirement (see https://ctan.org/pkg/pgfplots?lang=en)
+\usepackage{amsmath} % Better math presentation (see https://ctan.org/pkg/amsmath?lang=en)
+\usepackage{physics} % Better math presentation (see https://ctan.org/pkg/physics?lang=en)
+\usepackage{graphicx} % Insert images (see https://ctan.org/pkg/graphicx?lang=en)
+\usepackage{setspace} % For line spacing (see https://ctan.org/pkg/setspace?lang=en)
+\usepackage[section]{placeins} % Force figures to appear in the section in which they are declared (see https://ctan.org/pkg/placeins?lang=en)
+\usepackage[sorting=none, backref=true, style=ieee]{biblatex} % Citations (see https://ctan.org/pkg/biblatex?lang=en)
+\usepackage{markdown} % Use markdown in LaTeX (see https://ctan.org/pkg/markdown?lang=en)
+\usepackage[inkscapepath=output/.svg]{svg} % Insert svg images (see https://ctan.org/pkg/svg?lang=en)
+\usepackage{bookmark}% Linking (loads hypreref too) (see https://ctan.org/pkg/bookmark?lang=en)
+\usepackage{subcaption} % For subfigures (see https://ctan.org/pkg/subcaption?lang=en)
+\usepackage{float} % For H float setting (see https://ctan.org/pkg/float?lang=en)
+\usepackage{zref-savepos} % For technical drawings (see below of preabmle.tex for the use case) (see https://ctan.org/pkg/zref-savepos?lang=en)
+\usepackage{etoolbox} % For referencing appendix sections (see https://ctan.org/pkg/etoolbox?lang=en)
+
+% KOMA-Script settings:
+\KOMAoptions{
+    fontsize=11pt,
+    twoside=false,
+    chapterprefix=false,
+    toc=bib,
+    toc=chapterentrywithdots,
+    numbers=noenddot,
+    captions=tableabove,
+    captions=figurebelow,
+    headsepline=false,
+    DIV=12,
+}
+
+% Hyperref settings:
+\hypersetup{
+    pdftitle={\thetitle}, 
+    pdfsubject={A senior design project.},
+    bookmarksnumbered=true,
+    colorlinks=true,
+    hidelinks,
+    citecolor=red,
+    pdfstartview=Fit,
+}
+
+% Typography:
+%\setmainfont{Whatever you want}
+\setsansfont{SourceSansPro}[
+    Path= fonts/,
+    Extension = .ttf,
+    UprightFont = *-Regular,
+    ItalicFont = *-Italic,
+    BoldFont = *-Bold,
+    BoldItalicFont = *-BoldItalic
+]
+\setmonofont{SourceCodePro}[
+    Path= fonts/,
+    Extension = .ttf,
+    UprightFont = *-Regular,
+    ItalicFont = *-Italic,
+    BoldFont = *-Bold,
+    BoldItalicFont = *-BoldItalic
+]
+\setstretch{1.1}
+\setparsizes{17pt}{6pt}{0pt plus 1fil}
+
+% General package settings:
+\sisetup{inter-unit-product=\cdot, per-mode=symbol}
+\pgfplotsset{compat=1.9} % Guarantee backwards compatibility 
+\pgfplotsset{scaled y ticks=false} % To avoid scientific notation in y-axis
+\pgfplotsset{scaled x ticks=false} % To avoid scientific notation in x-axis
+\addbibresource{references.bib} % Citations
+\renewcommand{\contentsname}{Table of Contents} % Changing the title of TOC
+\renewcommand{\chapterautorefname}{Chapter} % Capitalize C in chapter in autoref
+\renewcommand{\sectionautorefname}{Section} % Capitalize S in section in autoref
+\renewcommand{\subsectionautorefname}{Section} % Rename subsection with Section in autoref
+\def\appendixautorefname{Appendix}
+
+% To force figures to appear in the subsection in which they are declared:
+\makeatletter
+\AtBeginDocument{%
+    \expandafter\renewcommand\expandafter\subsection\expandafter{%
+        \expandafter\@fb@secFB\subsection
+    }%
+}
+\makeatother
+
+% Figure size macros:
+\newcommand{\SmallSize}{0.3}
+\newcommand{\MediumSize}{0.4}
+\newcommand{\LargeSize}{0.55}
+
+% Define abstract environment:
+\newcommand\abstractname{Abstract}
+\makeatletter
+\if@titlepage
+  \newenvironment{abstract}{%
+      \titlepage
+      \null\vfil
+      \@beginparpenalty\@lowpenalty
+      \begin{center}%
+        \bfseries \abstractname
+        \@endparpenalty\@M
+      \end{center}}%
+     {\par\vfil\null\endtitlepage}
+\else
+  \newenvironment{abstract}{%
+      \if@twocolumn
+        \section*{\abstractname}%
+      \else
+        \small
+        \begin{center}%
+          {\bfseries \abstractname\vspace{-.5em}\vspace{\z@}}%
+        \end{center}%
+        \quotation
+      \fi}
+      {\if@twocolumn\else\endquotation\fi}
+\fi
+\makeatother
+
+% External URL style:
+\renewcommand\UrlFont{\color{blue}\ttfamily\footnotesize}
+
+% MATLAB codes:
+\lstset{
+    style = Matlab-editor,
+    basicstyle = \footnotesize\ttfamily,
+    backgroundcolor=\color{gray!7},
+    frame=single,
+    numbers=left,
+    numberstyle=\color{gray}\ttfamily\footnotesize,
+    xleftmargin=25pt,
+    xrightmargin=25pt,
+    belowskip=10pt,
+    aboveskip=10pt,
+    framesep=5pt
+}
+
+% For technical drawings (see https://tex.stackexchange.com/questions/502129/fill-remaining-page-with-image):
+\newcommand{\filltopageendgraphics}[2][]{
+    {\centering
+    \par
+    \zsaveposy{top-\thepage}% Mark (baseline of) top of image
+    \vfill
+    \zsaveposy{bottom-\thepage}% Mark (baseline of) bottom of image
+    \smash{\includegraphics[height=\dimexpr\zposy{top-\thepage}sp-\zposy{bottom-\thepage}sp\relax,#1]{#2}}%
+    \par}
+}
+
+% Markdown Settings:
+\markdownSetup{
+    hybrid,
+    underscores=false,
+    cacheDir=output/.md,
+    smartEllipses,
+    shiftHeadings=0,
+    rendererPrototypes={
+        link = {
+            \begin{equation}
+                #4
+                \label{eq:#1}
+            \end{equation}
+        },
+        image = {
+            \begin{figure}[ht!]
+                \centering
+                \catcode`\%=14\relax
+                \catcode`\#=6\relax
+                #3
+                \catcode`\%=12\relax
+                \catcode`\#=12\relax
+                \caption{#4}
+                \label{fig:#1}
+            \end{figure}
+        },
+        headingOne=  {
+            \chapter{#1}
+            \label{chap:#1}
+        },
+        headingTwo=  {
+            \section{#1}
+            \label{sec:#1}
+        },
+        headingThree=  {
+            \subsection{#1}
+            \label{subsec:#1}
+        },
+        emphasis = {
+            \catcode`\%=14\relax
+            \catcode`\#=6\relax
+            #1
+            \catcode`\%=12\relax
+            \catcode`\#=12\relax
+        },
+    }
+}
+
+% To make sure appendix sections render as Appendix A.3 (see https://tex.stackexchange.com/questions/149807/autoref-subsections-in-appendix)
+\def\appendixautorefname{Appendix}
+
+\makeatletter
+\patchcmd{\hyper@makecurrent}{%
+    \ifx\Hy@param\Hy@chapterstring
+        \let\Hy@param\Hy@chapapp
+    \fi
+}{%
+    \iftoggle{inappendix}{%true-branch
+        % list the names of all sectioning counters here
+        \@checkappendixparam{chapter}%
+        \@checkappendixparam{section}%
+        \@checkappendixparam{subsection}%
+        \@checkappendixparam{subsubsection}%
+        \@checkappendixparam{paragraph}%
+        \@checkappendixparam{subparagraph}%
+    }{}%
+}{}{\errmessage{failed to patch}}
+
+\newcommand*{\@checkappendixparam}[1]{%
+    \def\@checkappendixparamtmp{#1}%
+    \ifx\Hy@param\@checkappendixparamtmp
+        \let\Hy@param\Hy@appendixstring
+    \fi
+}
+\makeatletter
+
+\newtoggle{inappendix}
+\togglefalse{inappendix}
+
+\apptocmd{\appendix}{\toggletrue{inappendix}}{}{\errmessage{failed to patch}}

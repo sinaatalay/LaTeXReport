@@ -1,0 +1,26 @@
+\documentclass{scrbook}
+
+\newcommand{\thetitle}{Technical Studentship Report}
+\newcommand{\theauthor}{Sina Atalay}
+\newcommand{\thedate}{February 1, 2023 to January 31, 2024}
+
+\input{preamble}
+
+\begin{document}
+    \frontmatter
+
+    \input{title}
+    \input{abstract}
+    \hypertarget{toc}{} % Set the hypertarget for TOC
+    \bookmark[dest=toc,level=chapter]{\contentsname} % Add TOC as a bookmark
+    \tableofcontents
+
+    \mainmatter
+
+    \markdownInput{content/ch1.md}
+    \printbibliography
+
+    \appendix
+    
+    \input{appendix}
+\end{document}

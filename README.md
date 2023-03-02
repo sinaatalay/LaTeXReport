@@ -1,2 +1,3 @@
-# LaTeXReport
-LaTeX report template.
+# LaTeXReport [![License](https://img.shields.io/github/license/sinaatalay/LaTeXReport.svg)](https://github.com/sinaatalay/LaTeXReport/blob/main/LICENSE)
+
+This is the LaTeX template that I use for my reports. The template uses [Markdown Package](https://ctan.org/pkg/markdown?lang=en), so all the content can be effortlessly written using Markdown syntax. In addition, with the browser extension called [GrammarlyToMarkdown](https://github.com/brunoluiz/grammarly-markdown-extension), Grammarly can be used to write the content.
