@@ -1,0 +1,2 @@
+# LaTeXReport
+LaTeX report template.
